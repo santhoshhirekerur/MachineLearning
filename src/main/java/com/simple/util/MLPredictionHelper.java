@@ -41,13 +41,10 @@ public class MLPredictionHelper {
 				"Upload for review", "1", "Y" };
 		String[] featureValueArray3 = new String[] { "D&T ? Acquisition and Online",
 				"No action", "1", "Y" };
-		String[] featureValueArray4 = new String[] { "PF ? Credit Cards Portfolio, Partnerships & Loyalty",
-				"No action", "1", "Y" };
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		list.add(featureValueArray1);
 		list.add(featureValueArray2);
 		list.add(featureValueArray3);
-		list.add(featureValueArray4);
 		List<?> predictions=modelUsageSample.predict(list, mlModel);
 		
 		for (Object object : predictions) {
