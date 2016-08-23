@@ -26,7 +26,7 @@ public class MLPredictionHelper {
 		// Path to downloaded-ml-model (downloaded-ml-model can be found inside
 		// resources folder)
 		URL resource = MLPredictionHelper.class.getClassLoader().getResource(
-				"downloaded_ML_model_new");
+				"downloaded_ML_model_new_2");
 		String pathToDownloadedModel = new File(resource.toURI())
 				.getAbsolutePath();
 
@@ -35,13 +35,19 @@ public class MLPredictionHelper {
 				.deserializeMLModel(pathToDownloadedModel);
 
 		// Predict
-		String[] featureValueArray1 = new String[] { "Home Loans",
+		String[] featureValueArray1 = new String[] { "CBA Graphic Design team",
+				"Upload high-res assets", "1", "Y" };
+		String[] featureValueArray2 = new String[] { "Brand",
 				"Upload for review", "1", "Y" };
-		String[] featureValueArray2 = new String[] { "Regional Agri Business",
-				"Upload for review", "1", "Y" };
+		String[] featureValueArray3 = new String[] { "D&T ? Acquisition and Online",
+				"No action", "1", "Y" };
+		String[] featureValueArray4 = new String[] { "PF ? Credit Cards Portfolio, Partnerships & Loyalty",
+				"No action", "1", "Y" };
 		ArrayList<String[]> list = new ArrayList<String[]>();
 		list.add(featureValueArray1);
 		list.add(featureValueArray2);
+		list.add(featureValueArray3);
+		list.add(featureValueArray4);
 		List<?> predictions=modelUsageSample.predict(list, mlModel);
 		
 		for (Object object : predictions) {
