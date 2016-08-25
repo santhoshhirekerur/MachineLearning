@@ -25,6 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.inject.Named;
+
+
+@Named("processRequestAdapter")
 public class ProcessRequestDelegate implements JavaDelegate {
 
 	private final static Logger LOGGER = Logger.getLogger("Predict-REQUESTS");
