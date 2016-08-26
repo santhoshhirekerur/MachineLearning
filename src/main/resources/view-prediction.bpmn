@@ -12,7 +12,7 @@
       <bpmn:incoming>SequenceFlow_1abgx6v</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="SequenceFlow_1vbokmm" sourceRef="user_action_prediction" targetRef="processML" />
-    <bpmn:serviceTask id="processML" name="Process ML Prediction" camunda:delegateExpression="#{processRequestAdapter}">
+    <bpmn:serviceTask id="processML" name="Process ML Prediction" camunda:class="com.simple.camunda.ProcessRequestDelegate">
       <bpmn:incoming>SequenceFlow_1vbokmm</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00xrzql</bpmn:outgoing>
     </bpmn:serviceTask>

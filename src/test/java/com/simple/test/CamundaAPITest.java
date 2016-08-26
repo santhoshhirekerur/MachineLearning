@@ -4,14 +4,19 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.ass
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.processEngine;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.task;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.camunda.bpm.consulting.process_test_coverage.ProcessTestCoverage;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.mock.Mocks;
@@ -24,12 +29,15 @@ import com.simple.camunda.ProcessRequestDelegate;
 
 public class CamundaAPITest {
 	private static ProcessEngine processEngine;
-
+	private static TaskService taskService;
+	private static  RuntimeService runtimeService;
 	static {
 
 		processEngine = StandaloneInMemProcessEngineConfiguration
 				.createStandaloneInMemProcessEngineConfiguration()
 				.buildProcessEngine();
+		taskService=processEngine.getTaskService();
+		runtimeService = processEngine.getRuntimeService();
 	}
 
 	@Rule
@@ -65,9 +73,26 @@ public class CamundaAPITest {
 	    
 	    // check userTask
 	    // using camunda-bpm-assert
-		assertThat(processInstance).isStarted()
+		/*assertThat(processInstance).isStarted()
 				.isWaitingAt("user_action_prediction").task()
-				.isAssignedTo("john");
+				.isAssignedTo("john");*/
+	    Task waitStateBefore = taskService.createTaskQuery()
+	  	      .taskDefinitionKey("user_action_prediction")
+	  	      .processInstanceId(processInstance.getId())
+	  	      .singleResult();
+	  	    assertNotNull(waitStateBefore);
+	  	 
+	  	  
+	  	    
+	  	  taskService.complete(waitStateBefore.getId()); 
+	  	  
+	  	 variables = runtimeService.getVariables(processInstance.getId());
+		    
+		    for (Entry<String, Object> entry : variables.entrySet()) {
+				
+		    	System.out.println(entry.getKey() + "/" + entry.getValue());
+		    
+			}
 	    
 	 // check userTask
 	    // using camunda-bpm-assert
